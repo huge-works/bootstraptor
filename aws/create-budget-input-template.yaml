@@ -1,0 +1,30 @@
+---
+AccountId: '$AWS_BUDGET_ACCOUNT_ID'  # [REQUIRED] The accountId that is associated with the budget.
+Budget: # [REQUIRED] The budget object that you want to create.
+  BudgetName: Overall Budget  # [REQUIRED] The name of a budget.
+  BudgetLimit: # The total amount of cost, usage, RI utilization, RI coverage, Savings Plans utilization, or Savings Plans coverage that you want to track with your budget.
+    Amount: '50'  # [REQUIRED] The cost or usage amount that's associated with a budget forecast, actual spend, or budget threshold.
+    Unit: USD # [REQUIRED] The unit of measurement that's used for the budget forecast, actual spend, or budget threshold, such as USD or GBP.
+  CostTypes: # The types of costs that are included in this COST budget.
+    IncludeTax: true  # Specifies whether a budget includes taxes.
+    IncludeSubscription: true # Specifies whether a budget includes subscriptions.
+    UseBlended: true # Specifies whether a budget uses a blended rate.
+    IncludeRefund: true # Specifies whether a budget includes refunds.
+    IncludeCredit: true # Specifies whether a budget includes credits.
+    IncludeUpfront: true # Specifies whether a budget includes upfront RI costs.
+    IncludeRecurring: true # Specifies whether a budget includes recurring fees such as monthly RI fees.
+    IncludeOtherSubscription: true # Specifies whether a budget includes non-RI subscription costs.
+    IncludeSupport: true # Specifies whether a budget includes support subscription fees.
+    IncludeDiscount: true # Specifies whether a budget includes discounts.
+    UseAmortized: true # Specifies whether a budget uses the amortized rate.
+  TimeUnit: MONTHLY # [REQUIRED] The length of time until a budget resets the actual and forecasted spend. Valid values are: DAILY, MONTHLY, QUARTERLY, ANNUALLY.
+  BudgetType: USAGE # [REQUIRED] Specifies whether this budget tracks costs, usage, RI utilization, RI coverage, Savings Plans utilization, or Savings Plans coverage. Valid values are: USAGE, COST, RI_UTILIZATION, RI_COVERAGE, SAVINGS_PLANS_UTILIZATION, SAVINGS_PLANS_COVERAGE.
+NotificationsWithSubscribers: # A notification that you want to associate with a budget.
+- Notification:  # [REQUIRED] The notification that's associated with a budget.
+    NotificationType: ACTUAL  # [REQUIRED] Specifies whether the notification is for how much you have spent (ACTUAL) or for how much that you're forecasted to spend (FORECASTED). Valid values are: ACTUAL, FORECASTED.
+    ComparisonOperator: GREATER_THAN # [REQUIRED] The comparison that's used for this notification. Valid values are: GREATER_THAN, LESS_THAN, EQUAL_TO.
+    Threshold: 80.0 # [REQUIRED] The threshold that's associated with a notification.
+    ThresholdType: PERCENTAGE # The type of threshold for a notification. Valid values are: PERCENTAGE, ABSOLUTE_VALUE.
+  Subscribers: # [REQUIRED] A list of subscribers who are subscribed to this notification.
+  - SubscriptionType: EMAIL  # [REQUIRED] The type of notification that Amazon Web Services sends to a subscriber. Valid values are: SNS, EMAIL.
+    Address: $AWS_BUDGET_EMAIL # [REQUIRED] The address that Amazon Web Services sends budget notifications to, either an SNS topic or an email.
